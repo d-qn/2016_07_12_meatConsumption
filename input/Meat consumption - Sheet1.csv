@@ -1,0 +1,34 @@
+code,EN,FR,DE,IT,PT,AR,RU,ES,JA　,ZH
+main.title,Meat consumption around the world (1961-2013),Consommation de viande dans le monde (1961-2013),Fleischkonsum weltweit (1961-2013),Consumo di carne nel mondo (1961-2013),Consumo de carne no mundo (1961 a 2013),استهلاك اللحوم عبر أنحاء العالم (1961- 2013),Потребление мяса в мире (1961-2013),Consumo de carne en el mundo (1961-2013),世界の肉消費量の推移（１９６１～２０１３年）,1961至2013年全球各国肉类消费一览表
+title2,Meat consumption around the world - breakdown by meat type (1961-2013),Consommation de viande dans le monde - par type de viande (1961-2013),"Fleischkonsum weltweit, aufgeschlüsselt nach Fleischarten (1961-2013) ",Consumo di carne nel mondo - per tipo di carne (1961-2013),Consumo de carne no mundo - por tipo de carne (1961 a 2013),استهلاك اللحوم عبر أنحاء العالم  - بحسب أنواع اللحوم (1961- 2013),Потребление мяса в мире - по типам мясной продукции (1961-2013),Consumo de carne en el mundo - por tipo de carne (1961-2013),世界の肉消費量の推移（１９６１～２０１３年）肉の種類別,1961至2013年全球各国肉类消费一览表-按照肉的种类
+descr,In grams per person per day. For selected regions and countries,"Quantité quotidienne en grammes, par personne",In Gramm pro Person und Tag in ausgewählten Regionen und Ländern,Quantità giornaliera pro capite (in grammi),Em gramas por pessoa e por dia. Por regiões selecionadas e países,بحسب الغرامات، وبحسب الفرد الواحد، وخلال اليوم الواحد. بالنسبة لبعض المناطق والبلدان المختارة,В граммах на душу населения в день - в некоторых странах мира,"Cantidad diaria en gramos, por persona",国民１人１日当たりの消費量を国と地域別に表示（単位：グラム）,不同国家及地区，国民每人每天消费肉类(单位：克)
+source,Source,source,Quelle,Fonte,fonte,المصدر,Источник,Fuente,出典,来源
+source.name,Food and Agriculture Organization of the United Nations,Organisation des Nations Unies pour l'alimentation et l'agriculture (FAO),Ernährungs- und Landwirtschaftsorganisation der Vereinten Nationen (FAO),Organizzazione delle Nazioni Unite per l'alimentazione e l'agricoltura (FAO),Organização das Nações Unidas para Alimentação e Agricultura (FAO),منظمة الأغذية والزراعة للأمم المتحدة,Продовольственная и сельскохозяйственная организация ООН (ФАО),Organización de Naciones Unidas para la Alimentacion y la Agricultura (FAO),国連食糧農業機関（FAO）,联合国粮食及农业组织
+source.link,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E,http://faostat3.fao.org/download/FB/FBS/E
+x.axis,year,année,Jahr,anno,ano,السنة,год,año,年,年份
+y.axis,meat,viande,Fleisch,carne,carne,اللحم,вид мяса,carne,肉消費量,肉类
+bovine,bovine,bovine,Rind,bovina,bovina,بقري,говядина,vacuna,牛肉,牛肉
+pig,pig,porcine,Schwein,suina,suína,خنزير,свинина,porcina,豚肉,猪肉
+poultry,poultry,volaille,Geflügel,pollame,de aves,دواجن,курятина,aviar,鶏肉,家禽
+muttonGoat,mutton & goat,viande de mouton et de chèvre,Schafs- und Ziegenfleisch,carne di montone o capra,carne de carneiro e de cabra,غنمي,баранина/козлятина,carne de cordero y cabrito,羊肉、ヤギ肉,羊肉
+other,other,autre,andere,altro,outros,أنواع أخرى,другие,otra,その他,其他
+WORLD,World,Monde,Welt,Mondo,Mundo,العالم,в мире,Mundo,世界,全球
+EUROPE,Europe,Europe,Europa,Europa,Europa,أوروبا,Европа,Europa,ヨーロッパ,欧洲
+AFRICA,Africa,Afrique,Afrika,Africa,África,إفريقيا,Африка,África,アフリカ,非洲
+SOUTH AMERICA,South America,Amérique du Sud,Südamerika,America latina,América do Sul,أمريكا اللاتينية,Ю. Америка,Sudamérica,南米,南美
+ASIA,Asia,Asie,Asien,Asia,Ásia,آسيا,Азия,Asia,アジア,亚洲
+CH,Switzerland,Suisse,Schweiz,Svizzera,Suíça,سويسرا,Швейцария,Suiza,スイス,瑞士 
+US,United States,Etats-Unis,USA,Stati Uniti,Estados Unidos,الولايات المتحدة,США,Estados Unidos,米国,美国
+CN,China,Chine,China,Cina,China,الصين,Китай,China,中国,中国
+JP,Japan,Japon,Japan,Giappone,Japão,اليابان,Япония,Japón,日本,日本
+BR,Brazil,Brésil,Brasilien,Brasile,Brasil,البرازيل,Бразилия,Brasil,ブラジル,巴西
+FR,France,France,Frankreich,Francia,França,فرنسا,Франция,Francia,フランス,法国
+DE,Germany,Allemagne,Deutschland,Germania,Alemanha,ألمانيا,Германия,Alemania,ドイツ,德国
+IT,Italy,Italie,Italien,Italia,Itália,إيطاليا,Италия,Italia,イタリア,意大利
+ES,Spain,Espagne,Spanien,Spagna,Espanha,اسبانيا,Испания,España,スペイン,西班牙
+PT,Portugal,Portugal,Portugal,Portogallo,Portugal,البرتغال,Португалия,Portugal,ポルトガル,葡萄牙
+GB,United Kingdom,Royaume-Uni,Grossbritannien,Regno Unito,Reino Unido,بريطانيا,Великобритания,Reino Unido,英国,英国
+MA,Morocco,Maroc,Marokko,Marocco,Marrocos,المغرب,Марокко,Marruecos,モロッコ,摩洛哥
+AR,Argentina,Argentine,Argentinien,Argentina,Argentina,الأرجنتين,Аргентина,Argentina,アルゼンチン,阿根廷
+IN,India,Inde,Indien,India,Índia,الهند,Индия,India,インド,印度
+RU,Russian Federation,Russie,Russland,Russia,Rússia,روسيا الإتحادية,Российская Федерация,Rusia,ロシア,俄罗斯

@@ -1,0 +1,186 @@
+---
+title: "Meat Consumption"
+author: "Duc-Quang Nguyen"
+date: "12 July 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(magrittr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(swiMap)
+library(swiTheme)
+library(htmltools)
+library(swiRcharts)
+library(shiny)
+library(metricsgraphics)
+library(countrycode)
+
+input.file <- "data/51844fd7-5f72-4257-9389-c841df2d9255.csv"
+
+
+countries.sub <- c("World", "Europe", "Africa", "South America", "Asia", 
+                  "Switzerland",  "United States of America","China","Japan","Brazil",
+                  "France", "Germany", "Italy", "Spain", "Portugal", 
+                  "United Kingdom", "Morocco", "Argentina", "India","Russian Federation")
+
+trad.file <- "input/Meat consumption - Sheet1.csv"
+
+txt <- read.csv(trad.file, row.names = 1, stringsAsFactors = F)
+
+# discard incomplete translations
+cidx <- unique(which(txt =="" | is.na(txt), T)[,2])
+if(length(cidx > 0)) {
+  warning(paste(colnames(txt)[cidx], collapse = "\t"), " languages will be discarded!", "\n")
+  txt <- txt[,-cidx, drop = F]
+}
+colnames(txt)
+
+```
+
+
+
+```{r load and shape data}
+data.read <- read.csv(input.file, check.names = F, stringsAsFactors = F) %>% 
+  select(-`Domain Code`, -`Domain`,-ElementCode,	-ElementName, -ItemCode, -Flag, -FlagD)
+
+# filter by country sub
+data <- data.read %>% filter(AreaName %in% countries.sub)
+# express the value in g/capita/day
+data$val <- (data$Value * 1000) / 365.25
+
+# add the iso2c
+data$iso2c <- countrycode(data$AreaName, "country.name", "iso2c")
+data$iso2c  <- ifelse(is.na(data$iso2c), toupper(data$AreaName), data$iso2c)
+
+#test plot
+#ggplot(data = data, aes(x = Year, y = val, group = ItemName, colour = ItemName)) + geom_line() + facet_wrap(~ AreaName, ncol = 4) + swi_theme()
+```
+
+
+```{r metrigraphic}
+data$year <- as.Date(paste0(data$Year, "-12-31"))
+lang <- "EN"
+
+tot <- data %>% group_by(AreaName, year) %>% summarise(tot = sum(val, na.rm = T)) %>% ungroup()
+
+
+
+for(lang in colnames(txt)) {
+  
+  cat("\n", lang)
+  
+  p1 <- lapply(1:length(countries.sub), function(i) {
+    country <- countries.sub[i]
+    dd <- filter(data, AreaName == country)
+    dd$year <- as.numeric(format(dd$year, "%Y"))
+  
+    # country translation
+    countryLabel <- txt[unique(dd$iso2c), lang]
+        
+    dd %<>% group_by(year, AreaName) %>% 
+      summarise(tot = sum(val, na.rm = T)) %>% ungroup()
+  
+    axis.labels <- c( gsub(" ", "_", txt['x.axis', lang]), gsub(" ", "_", txt['y.axis', lang]))
+    colnames(dd)[which(colnames(dd) == "year")] <- axis.labels[1]
+    colnames(dd)[which(colnames(dd) == "tot")] <- axis.labels[2]
+      
+    p <- mjs_plot(data = dd, 
+                  x=axis.labels[1], y = axis.labels[2],
+                  width="100%", height="220px",
+                  decimals = 0, 
+                  left = 30, right = 10, bottom = 95, top = 10, buffer = 0, linked = F, 
+                  title = countryLabel) %>%
+      mjs_line(area = T, color = swi_rpal[i]) %>%
+      mjs_axis_y(min_y = min(tot$tot), max_y = max(tot$tot))
+    p
+  })
+  
+  p2 <- lapply(1:length(countries.sub), function(i) {
+    country <- countries.sub[i]
+    dd <- filter(data, AreaName == country)
+    countryLabel <- txt[unique(dd$iso2c), lang]
+
+    dd %<>% spread(ItemName, val) %>% group_by(year, AreaName) %>%
+      summarise(
+        `Bovine` = sum(`Bovine Meat`, na.rm = T),
+        `Pigmeat` = sum(`Pigmeat`, na.rm = T),
+        `Poultry` = sum(`Poultry Meat`, na.rm = T),
+        `Mutton_and_Goat` = sum(`Mutton & Goat Meat`, na.rm = T),
+        `Other` = sum(`Meat, Other`, na.rm = T)
+      ) %>% ungroup()
+
+    p <- mjs_plot(data = dd,
+                  x=year, y = Bovine,
+                  width="100%", height="230px",
+                  decimals = 0,
+                  left = 45, right = 25, bottom = 40, top = 0, buffer = 0, linked = F,
+                  title = countryLabel) %>%
+      mjs_line(color = "#333366") %>%
+      mjs_add_line(Pigmeat, color = "#ab3d3f") %>%
+      mjs_add_line(Poultry, color = "#89a23a") %>%
+      mjs_add_line(Mutton_and_Goat, color = "#ac673e") %>%
+      mjs_add_line(Other, color = "#e5dbcd") %>%
+      mjs_add_legend(c( txt['bovine', lang], txt['pig', lang], txt['poultry', lang], txt['muttonGoat', lang], txt['other', lang]), inline = F) %>%
+      mjs_axis_x(xax_format="date" , show = F ) %>% #,  min_x = as.numeric(min(data$year)))
+      mjs_axis_y(min_y = 0, max_y = max(data$val))
+    p
+  })
+  
+  cite <- paste0(
+    txt['source', lang], ": ", 
+    htmlLink(txt['source.link', lang], txt['source.name', lang]), " | ",
+    "swissinfo.ch"
+    )
+  
+  save_html(
+    fluidPage(
+      tags$h2(txt["main.title", lang]),
+      div(class = "descr", HTML(paste0(txt["descr", lang], "<br>"))),
+      div(class="graphic", 
+          fluidRow(lapply(1:length(p1), function(i) {
+            column(3, p1[[i]])
+          })),
+          div(id = "cite", HTML(cite))
+      ),
+      HTML(iframeresizer)  
+    ), 
+    file = paste0("meatConsumption_total_", lang,".html"), libdir = "js")
+  
+  original <- list.files("js", "metricsgraphics.css", full.names = T, recursive = T)
+  file.copy(
+    list.files(system.file("extdata", package="swiRcharts"), 'metricsgraphics.css', full.names = T),
+    original, overwrite = T)
+  
+  save_html(
+    fluidPage(
+      tags$h2(txt["title2", lang]),
+      div(class = "descr", HTML(paste0(txt["descr", lang], "<br>"))),
+      div(class="graphic",
+          fluidRow(lapply(1:length(p2), function(i) {
+            column(3, p2[[i]])
+          })),
+          div(id = "cite", HTML(""))
+      ),
+      HTML(iframeresizer)
+    ), 
+    file = paste0("meatConsumption_byMeatType_", lang,".html"), libdir = "js")
+
+  original <- list.files("js", "metricsgraphics.css", full.names = T, recursive = T)
+  file.copy(
+    list.files(system.file("extdata", package="swiRcharts"), 'metricsgraphics.css', full.names = T),
+    original, overwrite = T)
+
+  
+}
+
+```
+
+
+
+
+
+
